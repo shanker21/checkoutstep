@@ -1,0 +1,35 @@
+<div class="checkout-billing-address">
+    <div class="step-title" data-bind="i18n: 'Billing address'" data-role="title"></div>
+    <div class="billing-address-same-as-shipping-block field choice"
+         data-bind="visible: canUseShippingAddress()">
+        <!--<input type="checkbox" name="billing-address-same-as-shipping"
+               data-bind="checked: isAddressSameAsShipping, click: useShippingAddress, attr: {id: 'billing-address-same-as-shipping'}"/>
+        <label data-bind="attr: {for: 'billing-address-same-as-shipping'}">
+            <span data-bind="i18n: 'This address is also my billing address'"></span>
+        </label>-->
+        <table class="table">
+            <tr> <td>
+        <input type="radio" class="radio" name="billing-address-same-as-shipping" value="sameasdeliveryaddress" id="sameasdeliveryaddress"
+               checked="true" data-bind="checked: isAddressSameAsShipping, click: useShippingAddress">
+        <label class="label" for="sameasdeliveryaddress">
+            <span data-bind="i18n: 'Same as delivery address'"></span>
+        </label>
+            </td>
+            </tr>
+
+        <tr> <td>
+        <input type="radio" class="radio" name="billing-address-same-as-shipping" value="differentbillingaddress" id="differentbillingaddress"
+               data-bind="checked: isAddressSameAsShipping, click: useShippingAddress">
+        <label class="label" for="differentbillingaddress">
+            <span data-bind="i18n: 'Different billing address'"></span>
+        </label></td>
+        </tr>
+        </table>
+
+    </div>
+    <div class="billing-address-container">
+        <!-- ko template: 'MDC_CheckoutStep/billing-address/list' --><!-- /ko -->
+        <!-- ko template: 'MDC_CheckoutStep/billing-address/form' --><!-- /ko -->
+    </div>
+
+</div>

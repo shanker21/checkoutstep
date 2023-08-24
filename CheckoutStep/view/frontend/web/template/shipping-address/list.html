@@ -1,0 +1,22 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+
+<!-- ko if: (visible)-->
+<div class="field addresses">
+    <div class="control">
+        <div class="shipping-address-items">
+            <select class="select" name="billing_address_id" data-bind="
+        options: shippingAddressOptions,
+        optionsText: shippingAddressOptionsText,
+        value: selectedShippingAddress,
+        selectedOptions: chosenCountries,
+        event: {change: onShippingAddressChange(selectedShippingAddress())};
+    "></select>
+        </div>
+    </div>
+</div>
+<!-- /ko -->

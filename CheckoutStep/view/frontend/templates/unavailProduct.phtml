@@ -1,0 +1,112 @@
+<div class="content minicart-items pr-unavail-container">
+    <?php $bdata = $block->getUnavailableProducts(); 
+    // print_r($bdata);
+    ?>
+    <div class="content-top">
+        <?php $string = 'some'; ?>
+        <p><?php echo __('Sorry it looks like %1 of the items that you have selected are not available to your address.', [$string]) ?></p>
+        <p><?php echo __('The following products have been removed from your basket:') ?></p>
+    </div>
+    <div class="minicart-items-wrapper overflowed">
+        <ol class="minicart-items">
+            <?php $pids = ''; foreach ($bdata['ids'] as $pid => $pdata): $pids .= $pid.',' ?>
+                <li class="product-item">
+                    <div class="product">
+                        <span class="product-image-container">
+                            <span class="product-image-wrapper">
+                                <img class="img" src="<?php echo $pdata['image'] ?>" width="85" height="85" />
+                            </span>
+                            <div class="details-qty">
+                                <span class="value"><?php echo $pdata['qty'] ?></span>
+                            </div>
+                        </span>
+                        <div class="product-item-details">
+                            <div class="product-item-inner">
+                                <div class="product-item-name-block">
+                                    <strong class="product-item-name"><?php echo $pdata['name'] ?></strong>
+                                </div>
+                                <div class="subtotal">
+                                    <span class="price-excluding-tax">
+                                        <span class="cart-price">
+                                            <span class="price">
+                                                <?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency(number_format($pdata['price'],2),true,false); ?>
+                                            </span>
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            <?php endforeach; ?>
+        </ol>
+        <div class="btn-btm-cont">
+            <div class="bottom-message">
+                <input type="hidden" name="removeIds" id="removeIds" value="<?php echo trim($pids, ',') ?>">
+                <?php echo __('Are you happy to continue with your order?') ?>
+            </div>
+            <div class="actions">
+                <button id="replace-checkout"><?php echo __('Choose Replacement') ?></button>
+                <?php if($bdata['allRemove'] != 1): ?>
+                    <button id="continue-checkout"><?php echo __('Continue') ?></button>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal',
+            'mage/url',
+            'Magento_Checkout/js/model/step-navigator',
+            'Magento_Customer/js/customer-data',
+            'Magento_Checkout/js/action/get-totals'
+        ],
+        function(
+            $,
+            modal,
+            url,
+            stepNavigator,
+            customerData,
+            getTotalsAction
+        ) {
+            $(document).on("click", '#replace-checkout', function(event) {
+                $.ajax({
+                    url:  url.build('checkoutstep/deliveryslot/removeProducts'),
+                    data: ({removeIds: $('#removeIds').val(), allRemove: true}),
+                    type: 'post',
+                    dataType: 'json',
+                    showLoader: true,
+                }).done(function (data) {
+                    $.cookie('zipcode_availability',data.postcode);
+                    $.cookieStorage.set('zipcode_availability', data.postcode);
+                    window.location = url.build('how-to-get-started/our-meals');
+                });
+            });
+
+            $(document).on("click", '#continue-checkout', function(event) {
+                $.ajax({
+                    url:  url.build('checkoutstep/deliveryslot/removeProducts'),
+                    data: ({removeIds: $('#removeIds').val()}),
+                    type: 'post',
+                    dataType: 'json',
+                    showLoader: true,
+                }).done(function (data) {
+                    $("#not-available-popup-modal").modal("closeModal");
+                    var sections = ['cart'];
+                    customerData.invalidate(sections);
+                    customerData.reload(sections, true);
+                    var deferred = $.Deferred();
+                    getTotalsAction([], deferred);
+                    stepNavigator.next();
+
+                });
+            });
+        });
+
+</script>
+
+

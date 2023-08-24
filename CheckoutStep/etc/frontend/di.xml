@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
+        <plugin name="checkout_custom_shipping_fields" type="MDC\CheckoutStep\Plugin\Checkout\LayoutProcessorPlugin" sortOrder="1" />
+    </type>
+    <type name="Magento\Checkout\Block\Onepage">
+        <arguments>
+            <argument name="layoutProcessors" xsi:type="array">
+                <item name="moveShipToComponent" xsi:type="object">MDC\CheckoutStep\Block\Checkout\LayoutProcessor</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="delivery_slot_provider" xsi:type="object">MDC\CheckoutStep\Model\DeliverySlotProvider</item>
+                <item name="customer_title_provider" xsi:type="object">MDC\CheckoutStep\Model\CustomerAttributeProvider</item>
+                <item name="loqate_key_provider" xsi:type="object">MDC\CheckoutStep\Model\LoqateKeyProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Checkout\Block\Checkout\AttributeMerger">
+        <plugin name="customAttributeMerger" type="MDC\CheckoutStep\Plugin\AttributeMergerPlugin"/>
+    </type>
+</config>

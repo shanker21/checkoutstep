@@ -1,0 +1,37 @@
+<div class="delivery-slot-section" data-bind="visible: canShowDeliveryDate()">
+    <form data-role="delivery-slot-form" id="delivery-slot-form" class="form form-delivery-slot" method="post">
+        <div class="step-title" data-bind="i18n: 'Delivery slot'" data-role="title"></div>
+        <div class="field field-select-billing">
+            <span id="deliveryslotMessage" data-bind="html: deliveryslotMessage"></span>
+            <!-- <span id="cutoffTime" data-bind="html: cutoffTime"></span> -->
+            <br />
+            <div class="control">
+                <input type="hidden" value="" name="delivery_date" id="delivery_date">
+                <select id="delivery_date_select" name="delivery_date_select" class="select" data-bind="
+                        options:deliveryslotOptions,
+                        optionsValue: 'value',
+                        optionsText: 'label',
+                        value: delivery_date_select,
+                        event:{ change: deliverydatesRead}">
+                </select>
+            </div>
+        </div>
+
+        <div class="delivery-slot-dates-results">
+            <div data-bind="foreach: retrievedSlots">
+                <div class="delivery-date-label">
+                    <input type="radio"
+                        data-bind="attr: {id: $index, value: value}, event:{ change: $parent.setDeliveryDate}"
+                        class="delradio" name="ddate" />
+                    <label data-bind="attr:{for:$index}">
+                        <span data-bind="attr: {class: $index},text: label"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!--<div class="hidden" style="font-size:15px; color:red;" id="delivery-slot-message" data-bind="i18n: 'Please select delivery slot'"></div>-->
+    </form>
+</div>

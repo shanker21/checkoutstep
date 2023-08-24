@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <MDC_loqate>
+            <loqate_main>
+                <loqate_key>FC94-NH19-CG22-UJ59</loqate_key>
+            </loqate_main>
+        </MDC_loqate>
+    </default>
+</config>

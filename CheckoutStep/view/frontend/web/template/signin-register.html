@@ -1,0 +1,284 @@
+<!--Use 'stepCode' as id attribute-->
+<!--ko ifnot: (isCustomerLoggedIn) -->
+<li data-bind="fadeVisible: isVisible, attr: { id: stepCode }">
+    <div class="step-title" data-bind="i18n: stepTitle" data-role="title"></div>
+    <div id="checkout-step-title"
+         class="step-content"
+         data-role="content">
+        <h1 data-bind="i18n: 'Do you have an account with Wiltshire Farm Foods?'" >
+            Do you have an account with Wiltshire Farm Foods?
+        </h1>
+        <div class="product data items"
+             data-mage-init='{"mage/tabs": {"openedState": "active", "animate": {"duration": 100}, "active": 0}}'>
+
+            <div class="item title" data-role="collapsible">
+                <p class="switch" data-toggle="tab" href="#tabLogin"
+                data-bind="i18n: 'Yes, I have an account'">Yes, I have an account</p>
+            </div>
+            <div id="tabLogin" class="item content" data-role="content" style="display: none;">
+                <h1 class="page-title" data-ui-id="page-title-wrapper" data-bind="i18n: 'Sign in'">
+                    Sign in
+                </h1>
+                <form data-role="login" data-bind="submit:login" class="form form-login" method="post">
+                    <div class="field email required">
+                        <label class="label" for="email">
+                            <span data-bind="i18n: 'Email address'">Email address</span>
+                        </label>
+                        <div class="control">
+                            <input type="text" class="input-text login-email" id="email"
+                                   name="username"
+                                   data-validate="{required:true, 'validate-email':true}"
+                                   data-msg-required="Email can't be empty"
+                                   data-msg-validate-email="Email is not a valid email"/>
+                        </div>
+                    </div>
+                    <div class="field password required">
+                        <label for="login-password" class="label">
+                            <span data-bind="i18n: 'Password'">Password</span>
+                        </label>
+                        <div class="control">
+                            <input type="password"
+                                   class="input-text login-email"
+                                   id="login-password"
+                                   name="password"
+                                   data-validate="{required:true}"
+                                   data-msg-required="Password can't be empty"
+                                   autocomplete="off"/>
+                        </div>
+                    </div>
+                    <div class="field choice">
+                        <a href="javascript:void(0)" id="showpwd" class="show-pwd"  data-bind="click:showpwd" >
+                            <span id="lshowpwd" data-bind="i18n: 'Show Password'">Show Password</span>
+                        </a>
+                    </div>
+                    <div class="secondary">
+                        <a class="action action-remind"
+                           data-bind="attr: { href: forgotPasswordUrl, title: $t('Forgot Your Password?') }">
+                            <span data-bind="i18n: 'Forgot Your Password?'">Forgot Your Password?</span>
+                        </a>
+                    </div>
+                    <div class="actions-toolbar">
+                        <div class="primary">
+                            <button type="submit" class="action login primary sign-in">
+                                <span data-bind="i18n: 'Sign In'">Sign In</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="item title" data-role="collapsible">
+                <p class="switch" data-toggle="tab" href="#tabRegister" data-bind="i18n: 'No, I do not have an account'">
+                    No, I do not have an account
+                </p>
+            </div>
+            <div id="tabRegister" class="item content" data-role="content" style="display: none;">
+              
+                <h1 class="page-title" data-ui-id="page-title-wrapper" data-bind="i18n: 'Tell us about yourself'">
+                    Tell us about yourself
+                </h1>
+                <div class="mdsearch-result-categories">
+                    <strong id="error-message" style="display:none;color:red;" ></strong>
+                    <form class="form create account " id="create-account"
+                          data-bind="submit:register" method="post">
+
+
+                            <div class="field required">
+                                <label for="email_address" class="label">
+                                    <span data-bind="i18n: 'Your Email address'">Your Email Address</span>
+                                </label>
+                                <div class="control">
+                                    <input type="text" class="input-text reg-input" id="email_address"
+                                           name="email"
+                                           data-validate="{required:true, 'validate-max-min-check':true,'validate-email':true}"
+                                           data-msg-required="Email can't be empty"
+                                           data-msg-validate-email="Email is not a valid email"
+                                           data-bind="value: email"/>
+
+                                </div>
+                            </div>
+
+                            <div class="email-modal">
+                                <p>
+                                    <a href="javascript:void(0)" data-bind="i18n: 'Why are we asking for this?', click:openEmailModel" >
+                                        Why are we asking for this?
+                                    </a>
+                                </p>
+                            </div>
+
+                            <div id="showEmailModal" style="display:none;">
+                                <p data-bind="i18n: 'Your email address is required so we can email you to confirm your order and provide updates on your order delivery.'" >
+                                    Your email address is required so we can email you to confirm your order and provide updates on your order delivery.
+                                </p>
+                            </div>
+
+                            <div class="field field-title required" >
+                                <label class="label" for="title">
+                                    <span data-bind="i18n: 'Your Title'" >Your Title</span>
+                                </label>
+                                <div class="control">
+                                    <select id="title" name="title" class="select required-entry"
+                                            data-validate="{required:true}"
+                                            data-msg-required="Title can't be empty"
+                                            aria-required="true"
+                                            data-bind="options:customerTitleConfig,
+                                                    optionsValue: 'value',
+                                                    optionsText: 'label',
+                                                    optionsCaption: $t('Please select'),
+                                                    value: title">
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="field field-name-firstname required"  >
+                                <label class="label" for="firstname">
+                                    <span data-bind="i18n : 'Your First Name'">Your First Name</span>
+                                </label>
+                                <div class="control">
+                                    <input type="text" id="firstname" name="firstname" title="First Name"
+                                           class="input-text required-entry"
+                                           data-validate="{required:true}"
+                                           data-msg-required="First name can't be empty"
+                                           autocomplete="off" aria-required="true"
+                                           data-bind="value: firstname" maxlength="50">
+                                </div>
+                            </div>
+
+                            <div class="field field-name-lastname required" >
+                                <label class="label" for="lastname">
+                                    <span data-bind="i18n : 'Your Surname'">Your Surname</span>
+                                </label>
+                                <div class="control">
+                                    <input type="text" id="lastname" name="lastname"  title="Last Name"
+                                           class="input-text required-entry"
+                                           data-validate="{required:true}"
+                                           data-msg-required="Last name can't be empty"
+                                           autocomplete="off" aria-required="true"
+                                           data-bind="value: lastname" maxlength="50">
+                                </div>
+                            </div>
+
+                            <div class="field field-name-telephone required" >
+                                <label class="label" for="lastname">
+                                    <span data-bind="i18n : 'Telephone Number'">Telephone Number</span>
+                                </label>
+                                <div class="control">
+                                    <input type="text" id="telephone" name="telephone"  title="Telephone"
+                                           class="input-text required-entry"
+                                           data-validate="{required:true}"
+                                           data-msg-required="Telephone can't be empty"
+                                           autocomplete="off" aria-required="true"
+                                           data-bind="value: telephone">
+                                </div>
+                            </div>
+
+                            <div class="phone-modal">
+                                <p><a href="javascript:void(0)"
+                                      data-bind="i18n: 'Why are we asking for this?', click:openPhoneModel">
+                                    Why are we asking for this?</a>
+                                </p>
+                            </div>
+
+                            <div id="showPhoneModal" style="display:none;">
+                                <p data-bind="i18n: 'We require your telephone number so we can contact you if we have any questions about your order.'">
+                                    We require your telephone number so we can contact you if we have any questions about your order.
+                                </p>
+                            </div>
+
+                            <div class="field field-postcode required" >
+                                <label class="label" for="postcode">
+                                    <span data-bind="i18n: 'Post Code'">Post Code</span>
+                                </label>
+                                <div class="control">
+                                    <input type="text" id="reg_post_code" name="postcode" class="input-text required-entry"
+                                           data-validate="{required:true}"
+                                           data-msg-required="Post code can't be empty"
+                                           autocomplete="off" aria-required="true"
+                                           data-bind="value: postcode" maxlength="8">
+                                </div>
+                            </div>
+
+                           <p><b data-bind="i18n :'Sign Up For Our Email Newsletter'">Sign Up For Our Email Newsletter</b></p>
+                           <p class="reg-ins" data-bind="i18n: 'Would you like to receive emails from Wiltshire Farm Foods with offers, promotions, surveys, competitions or products that might be of interest to you?'" >
+                               Would you like to receive emails from Wiltshire Farm Foods with offers, promotions, surveys, competitions or products that might be of interest to you?
+                           </p>
+
+
+                           <div class="field choice newsletter">
+                                <input type="checkbox"
+                                       name="is_create_new_account"
+                                       title="Sign Up for Newsletter"
+                                       value="1"
+                                       id="is_new_account"
+                                       class="checkbox"
+                                       data-bind="checked: isRegister">
+                                <label for="is_new_account" class="label">
+                                    <span data-bind="i18n: 'Yes, please create me an account'" >Yes, please create me an account</span>
+                                </label>
+                           </div>
+
+                           <div class="password-container" id="password-container"
+                                data-bind="fadeVisible: isRegisterPasswordVisible" >
+                               <div class="field password required">
+                                    <label for="password" class="label">
+                                        <span data-bind="i18n: 'Password'" >Password</span>
+                                    </label>
+                                    <div class="control">
+                                        <input type="password" name="password" id="password" title="Password"
+                                               class="input-text reg-input validate-length maximum-length-110"
+                                               data-password-min-length="4" data-password-max-length="110"
+                                               data-password-min-character-sets="4"
+                                               autocomplete="off" aria-required="true">
+                                        <div class="note-pswd" data-bind="i18n:'To keep your account secure, please enter a password that is at least 4 characters long and contains at least one capital letter and one number.'">
+                                            To keep your account secure, please enter a password that is at least 4 characters long and contains at least one capital letter and one number.
+                                        </div>
+                                    </div>
+                               </div>
+
+                               <div class="field confirmation required">
+                                    <label for="password-confirmation" class="label">
+                                        <span data-bind="i18n: 'Confirm Password'">Confirm Password</span>
+                                    </label>
+                                    <div class="control">
+                                        <input type="password" name="password_confirmation" title="Confirm Password"
+                                               id="password-confirmation" class="input-text reg-input"
+                                               aria-required="true">
+                                    </div>
+                               </div>
+
+                               <div class="field choice newsletter">
+                                   <input type="checkbox"
+                                          name="is_subscribed"
+                                          title="Sign Up for Newsletter"
+                                          value="1"
+                                          id="is_subscribed"
+                                          class="checkbox"/>
+                                   <label for="is_subscribed" class="label">
+                                       <span data-bind="i18n : 'Yes, please send me these emails'">
+                                           Yes, please send me these emails
+                                       </span>
+                                   </label>
+                               </div>
+                               <p class="reg-ins" data-bind="i18n: 'Should you change your mind later, you can stop receiving these emails at any point'">
+                                   Should you change your mind later, you can stop receiving these emails at any point
+                               </p>
+
+                           </div>
+
+                           <div class="actions-toolbar">
+                                <div class="primary">
+                                    <button type="submit" class="action primary sign-in" >
+                                        <span data-bind="i18n: 'Confirm details'">Confirm details</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</li>
+<!-- /ko -->
